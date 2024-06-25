@@ -63,13 +63,13 @@ const SigninPage = () => {
                                     className="form-control mt-2"
                                     placeholder="Email Address"
                                     autoComplete="off"
-                                    {...register('correo'/* , { required: true } */)}
+                                    {...register('correo', { required: true })}
                                 />
                                 {errors.correo && <p className='text-danger'>Correo es requerido</p>}
                                 <input type="password"
                                     className="form-control mt-2"
                                     placeholder="Password"
-                                    {...register('clave'/* , { required: true } */)}
+                                    {...register('clave', { required: true })}
                                 />
                                 {errors.clave && <p className='text-danger'>Clave es requerida</p>}
                                 <button className="btn btn-outline-success mt-2" type="submit" disabled={checking}>
