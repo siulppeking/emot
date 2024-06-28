@@ -25,7 +25,6 @@ export const authSlice = createSlice({
         },
         login: (state, { payload }) => {
             state.status = 'authenticated'
-            state.checking = false
             state.nombreUsuario = payload.nombreUsuario
             state.correo = payload.correo
             state.errorMessage = null

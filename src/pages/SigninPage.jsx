@@ -1,48 +1,43 @@
-import React, { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { Loading } from '../components/Loading';
+
+import { useAuthStore } from '../hooks/useAuthStore';
+
 import BotonLoginGoogle from './BotonLoginGoogle';
-import { authCheckingCredentials } from '../store/auth/authThunk';
-import { limpiarErrores } from '../store/auth/authSlice';
+import { Loading } from '../components/Loading';
 
 const SigninPage = () => {
-
-    const dispatch = useDispatch();
-
+    const { fnLogin, fnLimpiarErrores, status, checking, error, errores } = useAuthStore();
+    
     const { register, handleSubmit, formState: {
         errors
     } } = useForm();
-
-    const { status, checking, errorMessage, error, errores } = useSelector(state => state.auth);
 
     const navigate = useNavigate();
 
     useEffect(() => {
         if (status == 'authenticated' && !checking) {
-
             const lastPath = localStorage.getItem('lastPath') || '/admin';
             navigate(lastPath, {
                 replace: true
             })
-
-            //navigate('/admin', { replace: true });
         }
     }, [status])
 
     const formOnSubmit = handleSubmit(async (values) => {
-        dispatch(authCheckingCredentials(values.correo, values.clave));
+        const { correo, clave } = values;
+        fnLogin(correo, clave)
     });
 
     useEffect(() => {
         if (error || errores) {
             const timer = setTimeout(() => {
-                dispatch(limpiarErrores())
+                fnLimpiarErrores()
             }, 5000);
             return () => clearTimeout(timer);
         }
-    }, [error]);
+    }, [error, errores]);
 
     return (
         <div className="container-fluid animate__animated animate__fadeIn">
