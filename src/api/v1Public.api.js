@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const v1PublicApi = axios.create({
-    baseURL: `${import.meta.env.VITE_RESTAPI_SEGURIDAD}/api/v1`
+    baseURL: `https://seguridad-backend-emot.onrender.com/api/v1`
 });
 
 v1PublicApi.interceptors.request.use(async config => {
