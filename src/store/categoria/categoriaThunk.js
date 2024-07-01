@@ -8,7 +8,7 @@ export const thunkObtenerCategorias = () => {
         try {
             dispatch(iniciarEjecucion())
             const respuesta = await axios({
-                url: `${import.meta.env.VITE_RESTAPI_SEGURIDAD}/api/v1/categories`,
+                url: `${import.meta.env.VITE_BASEAPI_EMOT}/api/v1/categories`,
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

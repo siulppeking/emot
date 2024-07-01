@@ -11,13 +11,14 @@ import AdminPage from '../pages/AdminPage'
 import { Loading } from '../components/Loading'
 import { useCheckUser } from '../hooks/useCheckUser'
 import AboutPage from '../pages/AboutPage'
+import PublicacionPage from '../pages/PublicacionPage'
 
 const AppRouter = () => {
 
     const { checking } = useCheckUser()
 
     if (checking) return <Loading />
-    
+
     return (
         <Routes>
             <Route element={<PublicRouter />}>
@@ -31,6 +32,7 @@ const AppRouter = () => {
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="/category" element={<CategoryPage />} />
                 <Route path="/product" element={<ProductPage />} />
+                <Route path="/publicacion" element={<PublicacionPage />} />
             </Route>
 
             <Route path="*" element={<PageNotFound />} />

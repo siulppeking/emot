@@ -9,6 +9,7 @@ export const authSlice = createSlice({
         checking: false,
         nombreUsuario: null,
         correo: null,
+        fotoURL: null,
         error: null,
         errores: null,
         mensajeError: null,
@@ -27,7 +28,9 @@ export const authSlice = createSlice({
             state.status = 'authenticated'
             state.nombreUsuario = payload.nombreUsuario
             state.correo = payload.correo
+            state.fotoURL = payload.fotoURL;
             state.errorMessage = null
+            state.checking = false
         },
         logout: (state, { payload }) => {
             state.status = 'no-authenticated'

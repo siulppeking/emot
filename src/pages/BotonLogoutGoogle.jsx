@@ -26,7 +26,7 @@ const BotonLogoutGoogle = () => {
 
     return (
         <button type='button' className='btn btn-danger my-2 my-sm-0' onClick={handleSignOut}>
-            Salir
+            <i className='bx bx-log-out'></i> Salir
         </button>
     );
 };

@@ -6,16 +6,16 @@ export const authCheckingCredentials = (correoIn, claveIn) => {
         try {
             dispatch(iniciarEjecucion());
             const response = await axios({
-                url: `${import.meta.env.VITE_RESTAPI_SEGURIDAD}/api/v1/auth/login`,
+                url: `${import.meta.env.VITE_BASEAPI_EMOT}/api/v1/auth/login`,
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 data: { correo: correoIn, clave: claveIn }
             })
-            const { nombreUsuario, correo, token } = response.data.datos;
+            const { nombreUsuario, correo, token, fotoURL } = response.data.datos;
             localStorage.setItem('token', token);
-            dispatch(login({ nombreUsuario, correo }))
+            dispatch(login({ nombreUsuario, correo, fotoURL }))
         } catch (error) {
             console.log(error);
             if (error.response.data.respuesta === 'ERROR') {
@@ -34,17 +34,17 @@ export const authCheckingCredentialsGoogle = (googleToken) => {
         try {
             dispatch(checkingCredentials())
             const response = await axios({
-                url: `${import.meta.env.VITE_RESTAPI_SEGURIDAD}/api/v1/auth/login/google`,
+                url: `${import.meta.env.VITE_BASEAPI_EMOT}/api/v1/auth/login/google`,
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 data: { googleToken }
             })
-            const { nombreUsuario, correo, token } = response.data.datos;
+            const { nombreUsuario, correo, token, fotoURL } = response.data.datos;
             localStorage.setItem('token', token);
             localStorage.setItem('correo', correo);
-            dispatch(login({ nombreUsuario, correo }))
+            dispatch(login({ nombreUsuario, correo, fotoURL }))
         } catch (error) {
             let cadena = ''
             if (error.response.data.status === 'VALIDATION_ERRORS') {
@@ -63,7 +63,7 @@ export const authCheckingCredentialsRegister = (correoIn, claveIn) => {
         try {
             dispatch(iniciarEjecucion());
             const response = await axios({
-                url: `${import.meta.env.VITE_RESTAPI_SEGURIDAD}/api/v1/auth/registro`,
+                url: `${import.meta.env.VITE_BASEAPI_EMOT}/api/v1/auth/registro`,
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
