@@ -15,9 +15,9 @@ export const useAuthStore = () => {
                 correo: correoIn,
                 clave: claveIn
             });
-            const { nombreUsuario, correo, token } = response2.data.datos;
+            const { nombreUsuario, correo, token, fotoURL } = response2.data.datos;
             localStorage.setItem('token', token);
-            dispatch(login({ nombreUsuario, correo }))
+            dispatch(login({ nombreUsuario, correo, fotoURL }))
         } catch (error) {
             console.log(error);
             if (error.response.data.respuesta === 'ERROR') {

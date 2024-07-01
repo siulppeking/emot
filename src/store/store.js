@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
+import { uiSlice } from './ui/ui.slice'
 import { authSlice } from './auth/authSlice'
-import { categoriaSlice } from './categoria/categoriaSlice'
-import { productoSlice } from './productos/productoSlice'
+import { publicacionSlice } from './publicacion/publicacion.slice'
 
 export default configureStore({
     reducer: {
+        ui: uiSlice.reducer,
         auth: authSlice.reducer,
-        categoria: categoriaSlice.reducer,
-        producto: productoSlice.reducer
-    },
+        publicacion: publicacionSlice.reducer,
+    }
 })

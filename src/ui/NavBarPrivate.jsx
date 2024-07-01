@@ -5,7 +5,7 @@ import svg from '../assets/vite.svg';
 
 const NavBarPrivate = () => {
 
-    const { nombreUsuario } = useSelector(state => state.auth);
+    const { nombreUsuario, fotoURL } = useSelector(state => state.auth);
 
     return (
         <nav className="navbar navbar-expand-lg bg-light" data-bs-theme="light">
@@ -19,14 +19,12 @@ const NavBarPrivate = () => {
                 <div className="collapse navbar-collapse" id="navbarColor03">
                     <ul className="navbar-nav me-auto">
                         <li className="nav-item">
-                            <NavLink className="nav-link" to='/category'>Categoria</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to='/product'>Producto</NavLink>
+                            <NavLink className="nav-link" to='/publicacion'>Publicaciones</NavLink>
                         </li>
                     </ul>
-                    <form className="d-flex">
-                        <span className='text-success' style={{ margin: '7px 7px 0 0' }}><strong>@{nombreUsuario}</strong></span>
+                    <form className="d-flex" style={{ alignItems: 'center' }}>
+                        <span className='text-primary' style={{ margin: '7px 5px 0 0' }}><strong>@{nombreUsuario}</strong></span>
+                        <img src={fotoURL} className="img-fluid rounded-circle ms-1 me-2" alt="Foto del Usuario" style={{ objectFit: 'cover', width: '35px', height: '35px' }} />
                         <BotonLogoutGoogle />
                     </form>
                 </div>

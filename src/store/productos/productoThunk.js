@@ -7,7 +7,7 @@ export const thunkObtenerProductos = () => {
             //dispatch(ejecutando())
             dispatch(iniciarEjecucion());
             const respuesta = await axios({
-                url: `${import.meta.env.VITE_RESTAPI_SEGURIDAD}/api/v1/products`,
+                url: `${import.meta.env.VITE_BASEAPI_EMOT}/api/v1/products`,
                 method: 'GET',
                 headers: {
                     'Authorization': localStorage.getItem('token'),

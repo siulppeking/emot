@@ -14,15 +14,15 @@ export const useCheckUser = () => {
             if (token !== null) {
                 try {
                     const response = await axios({
-                        url: `${import.meta.env.VITE_RESTAPI_SEGURIDAD}/api/v1/auth/verificar`,
+                        url: `${import.meta.env.VITE_BASEAPI_EMOT}/api/v1/auth/verificar`,
                         method: 'GET',
                         headers: {
                             'Authorization': token,
                             'Content-Type': 'application/json'
                         }
                     })
-                    const { nombreUsuario, correo } = response.data.datos;
-                    dispatch(login({ nombreUsuario, correo }))
+                    const { nombreUsuario, correo, fotoURL } = response.data.datos;
+                    dispatch(login({ nombreUsuario, correo, fotoURL }))
                 } catch (error) {
                     dispatch(logout({ errorMessage: null }))
                     localStorage.removeItem('correo');
