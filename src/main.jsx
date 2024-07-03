@@ -8,7 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import store from './store/store'
 import { Provider } from 'react-redux'
 
-import './bootstrap/spacelab.css';
+import './bootstrap/flatly.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -17,6 +17,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <EmotApp />
       </BrowserRouter>
     </Provider>
-
   </React.StrictMode>,
 )

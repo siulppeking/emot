@@ -1,17 +1,18 @@
 // src/components/BotonLogoutGoogle.js
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { checkingCredentials, logout } from '../store/auth/authSlice';
+import { logout } from '../store/auth/authSlice';
+import { finCargando, inicioCargando } from '../store/ui/ui.slice';
 
 const BotonLogoutGoogle = () => {
     const dispatch = useDispatch();
 
     const handleSignOut = () => {
-        dispatch(checkingCredentials())
-
+        dispatch(inicioCargando());
         if (!localStorage.getItem('correo')) {
             localStorage.removeItem('token');
-            dispatch(logout({ errorMessage: null }))
+            dispatch(logout());
+            dispatch(finCargando());
             return;
         }
 
@@ -20,7 +21,8 @@ const BotonLogoutGoogle = () => {
         google.accounts.id.revoke(localStorage.getItem('correo'), done => {
             localStorage.removeItem('correo');
             localStorage.removeItem('token');
-            dispatch(logout({ errorMessage: null }))
+            dispatch(logout());
+            dispatch(finCargando());
         })
     }
 

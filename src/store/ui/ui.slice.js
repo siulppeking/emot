@@ -2,33 +2,33 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const uiSlice = createSlice({
     //nombre del slice con el que se vincula al store
-    name: 'publicacion',
+    name: 'ui',
     //declaracion del estado inicial de las variables
     initialState: {
-        ejecutandoTransaccion: false,
+        cargando: true,
         error: null,
         errores: null
     },
     //funciones que modifican el estado
     reducers: {
-        iniciarEjecucion: (state) => {
-            state.ejecutandoTransaccion = true;
+        inicioCargando: (state) => {
+            state.cargando = true;
         },
-        terminarEjecucion: (state) => {
-            state.ejecutandoTransaccion = false;
+        finCargando: (state) => {
+            state.cargando = false;
         },
-        agregarError: (state, { payload }) => {
-            state.error = payload.error;
+        agregarError: (state, action) => {
+            state.error = action.payload.error;
         },
-        agregarErrores: (state, { payload }) => {
-            state.errores = payload.errores
+        agregarErrores: (state, action) => {
+            state.errores = action.payload.errores
         }
     },
 });
 
 export const {
-    iniciarEjecucion,
-    terminarEjecucion,
+    inicioCargando,
+    finCargando,
     agregarError,
     agregarErrores
 } = uiSlice.actions;

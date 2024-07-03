@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux';
 import { usePublicacionStore } from '../hooks/usePublicacionStore';
 import { Loading } from '../components/Loading';
 import { useForm } from 'react-hook-form';
@@ -7,25 +6,22 @@ import PublicacionCard from '../components/PublicacionCard';
 
 const PublicacionPage = () => {
 
-    const { ejecutandoTransaccion } = useSelector(state => state.ui);
+    const { cargando, fnObtenerPublicaciones, publicaciones, fnCrearPublicacion } = usePublicacionStore();
 
-    const { fnObtenerPublicaciones, publicaciones, fnCrearPublicacion } = usePublicacionStore();
-
-
-
-    const { register, handleSubmit, formState: {
+    const { register, reset, handleSubmit, formState: {
         errors
     } } = useForm();
 
     const formOnSubmit = handleSubmit(async (values) => {
-        fnCrearPublicacion(values.titulo, values.descripcion)
+        fnCrearPublicacion(values.titulo, values.descripcion);
+        reset();
     })
 
     useEffect(() => {
         fnObtenerPublicaciones()
     }, []);
 
-    if (ejecutandoTransaccion) return <Loading />
+    if (cargando) return <Loading />
 
     return (
         <div className="container ontainer animate__animated animate__fadeIn">

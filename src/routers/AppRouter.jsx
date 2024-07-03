@@ -1,11 +1,9 @@
 import { Route, Routes } from 'react-router-dom'
 import HomePage from '../pages/HomePage'
-import SigninPage from '../pages/SigninPage'
-import SignupPage from '../pages/SignupPage'
+import AuthLoginPage from '../pages/AuthLoginPage'
+import AuthRegistroPage from '../pages/AuthRegistroPage'
 import PublicRouter from './PublicRouter'
 import PrivateRouter from './PrivateRouter'
-import CategoryPage from '../pages/CategoryPage'
-import ProductPage from '../pages/ProductPage'
 import PageNotFound from '../ui/PageNotFound'
 import AdminPage from '../pages/AdminPage'
 import { Loading } from '../components/Loading'
@@ -15,23 +13,21 @@ import PublicacionPage from '../pages/PublicacionPage'
 
 const AppRouter = () => {
 
-    const { checking } = useCheckUser()
+    const { cargando } = useCheckUser();
 
-    if (checking) return <Loading />
+    if (cargando) return <Loading />
 
     return (
         <Routes>
             <Route element={<PublicRouter />}>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/about" element={<AboutPage />} />
-                <Route path="/auth/login" element={<SigninPage />} />
-                <Route path="/auth/register" element={<SignupPage />} />
+                <Route path="/login" element={<AuthLoginPage />} />
+                <Route path="/registro" element={<AuthRegistroPage />} />
             </Route>
 
             <Route element={<PrivateRouter />}>
                 <Route path="/admin" element={<AdminPage />} />
-                <Route path="/category" element={<CategoryPage />} />
-                <Route path="/product" element={<ProductPage />} />
                 <Route path="/publicacion" element={<PublicacionPage />} />
             </Route>
 

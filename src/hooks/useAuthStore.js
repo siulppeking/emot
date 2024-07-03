@@ -1,32 +1,33 @@
 import { useDispatch, useSelector } from "react-redux"
-import { agregarError, agregarErrores, iniciarEjecucion, limpiarErrores, login, terminarEjecucion } from "../store/auth/authSlice";
+import { agregarError, agregarErrores, limpiarErrores, login } from "../store/auth/authSlice";
 import { v1PublicApi } from "../api/v1Public.api";
+import { finCargando, inicioCargando } from "../store/ui/ui.slice";
 
 export const useAuthStore = () => {
 
-    const { status, checking, error, errores } = useSelector(state => state.auth);
-
     const dispatch = useDispatch();
+
+    const { error, errores, status } = useSelector(state => state.auth);
+    const { cargando } = useSelector(state => state.ui);
 
     const fnLogin = async (correoIn, claveIn) => {
         try {
-            dispatch(iniciarEjecucion());
-            const response2 = await v1PublicApi.post('/auth/login', {
-                correo: correoIn,
-                clave: claveIn
-            });
-            const { nombreUsuario, correo, token, fotoURL } = response2.data.datos;
+            dispatch(inicioCargando());
+            const data = { correo: correoIn, clave: claveIn }
+            const response = await v1PublicApi.post('/auth/login', data);
+
+            const { nombreUsuario, correo, token, fotoURL } = response.data.datos;
             localStorage.setItem('token', token);
-            dispatch(login({ nombreUsuario, correo, fotoURL }))
+            dispatch(login({ nombreUsuario, correo, fotoURL }));
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
             if (error.response.data.respuesta === 'ERROR') {
                 dispatch(agregarError({ error: error.response.data.mensaje }))
             } else if (error.response.data.respuesta === 'ERRORES') {
                 dispatch(agregarErrores({ errores: error.response.data.datos.errores }))
             }
         } finally {
-            dispatch(terminarEjecucion())
+            dispatch(finCargando());
         }
     }
 
@@ -38,7 +39,7 @@ export const useAuthStore = () => {
         fnLogin,
         fnLimpiarErrores,
         status,
-        checking,
+        cargando,
         error,
         errores
     }

@@ -1,38 +1,9 @@
 import axios from "axios"
-import { agregarError, agregarErrores, checkingCredentials, iniciarEjecucion, login, logout, terminarEjecucion } from "./authSlice"
-
-export const authCheckingCredentials = (correoIn, claveIn) => {
-    return async (dispatch) => {
-        try {
-            dispatch(iniciarEjecucion());
-            const response = await axios({
-                url: `${import.meta.env.VITE_BASEAPI_EMOT}/api/v1/auth/login`,
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data: { correo: correoIn, clave: claveIn }
-            })
-            const { nombreUsuario, correo, token, fotoURL } = response.data.datos;
-            localStorage.setItem('token', token);
-            dispatch(login({ nombreUsuario, correo, fotoURL }))
-        } catch (error) {
-            console.log(error);
-            if (error.response.data.respuesta === 'ERROR') {
-                dispatch(agregarError({ error: error.response.data.mensaje }))
-            } else if (error.response.data.respuesta === 'ERRORES') {
-                dispatch(agregarErrores({ errores: error.response.data.datos.errores }))
-            }
-        } finally {
-            dispatch(terminarEjecucion())
-        }
-    }
-}
+import { agregarError, agregarErrores, login, logout } from "./authSlice"
 
 export const authCheckingCredentialsGoogle = (googleToken) => {
     return async (dispatch) => {
         try {
-            dispatch(checkingCredentials())
             const response = await axios({
                 url: `${import.meta.env.VITE_BASEAPI_EMOT}/api/v1/auth/login/google`,
                 method: 'POST',
@@ -61,7 +32,6 @@ export const authCheckingCredentialsGoogle = (googleToken) => {
 export const authCheckingCredentialsRegister = (correoIn, claveIn) => {
     return async (dispatch) => {
         try {
-            dispatch(iniciarEjecucion());
             const response = await axios({
                 url: `${import.meta.env.VITE_BASEAPI_EMOT}/api/v1/auth/registro`,
                 method: 'POST',
@@ -75,7 +45,7 @@ export const authCheckingCredentialsRegister = (correoIn, claveIn) => {
             localStorage.setItem('token', token);
             dispatch(login({ nombreUsuario, correo }))
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
             if (error.response.data.respuesta === 'ERROR') {
                 dispatch(agregarError({ error: error.response.data.mensaje }))
             } else if (error.response.data.respuesta === 'ERRORES') {

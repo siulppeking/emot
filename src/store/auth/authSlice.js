@@ -6,7 +6,6 @@ export const authSlice = createSlice({
     //declaracion del estado inicial de las variables
     initialState: {
         status: 'no-authenticated', // 'authenticated' 'no-authenticated' 
-        checking: false,
         nombreUsuario: null,
         correo: null,
         fotoURL: null,
@@ -16,32 +15,20 @@ export const authSlice = createSlice({
     },
     //funciones que modifican el estado
     reducers: {
-        iniciarEjecucion: (state) => {
-            state.checking = true;
-            state.error = null;
-            state.errores = null;
-        },
-        terminarEjecucion: (state) => {
-            state.checking = false;
-        },
         login: (state, { payload }) => {
-            state.status = 'authenticated'
-            state.nombreUsuario = payload.nombreUsuario
-            state.correo = payload.correo
+            state.status = 'authenticated';
+            state.nombreUsuario = payload.nombreUsuario;
+            state.correo = payload.correo;
             state.fotoURL = payload.fotoURL;
-            state.errorMessage = null
-            state.checking = false
         },
         logout: (state, { payload }) => {
             state.status = 'no-authenticated'
-            state.checking = false
             state.nombreUsuario = null
             state.correo = null
-            state.errorMessage = payload.errorMessage
+            state.fotoURL = null;
         },
-        checkingCredentials: (state) => {
-            state.status = 'checking'
-            state.checking = true;
+        verificarLogin: (state, action) => {
+            state.status = 'no-authenticated'
         },
         agregarError: (state, { payload }) => {
             state.error = payload.error;
@@ -53,15 +40,13 @@ export const authSlice = createSlice({
             state.error = null;
             state.errores = null;
         }
-    },
+    }
 });
 
 export const {
-    iniciarEjecucion,
-    terminarEjecucion,
     login,
     logout,
-    checkingCredentials,
+    verificarLogin,
     agregarError,
     agregarErrores,
     limpiarErrores

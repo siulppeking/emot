@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
-import BotonLogoutGoogle from '../pages/BotonLogoutGoogle';
+import { NavLink } from 'react-router-dom';
+import BotonLogoutGoogle from '../components/BotonLogoutGoogle';
 import svg from '../assets/vite.svg';
 
 const NavBarPrivate = () => {

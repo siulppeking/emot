@@ -1,6 +1,11 @@
+import { usePublicacionStore } from "../hooks/usePublicacionStore";
+
 const PublicacionCard = ({ publicacion }) => {
-    const { titulo, descripcion, fecCreFormato3 } = publicacion;
+    const { publicacionId, titulo, descripcion, fecCreFormato3, reacciones, reaccionado } = publicacion;
     const { fotoURL, nombreUsuario } = publicacion.usuario;
+
+    const { fnCambiarReaccionPublicacion } = usePublicacionStore();
+
     return (
         <div className="card mb-3">
             <div className="row g-0">
@@ -18,11 +23,20 @@ const PublicacionCard = ({ publicacion }) => {
                         }
                         <p className="card-text">{descripcion}</p>
 
-                        <i className='bx bxs-heart bx-sm text-primary'></i>
-                        <i className='bx bx-heart bx-sm text-primary ms-1'></i>
-                        <i className='bx bx-chat bx-sm text-primary ms-1'></i>
-                        <i className='bx bxs-share bx-sm text-primary ms-1'></i>
-                        <i className='bx bx-share bx-sm text-primary ms-1'></i>
+                        <div className="d-flex align-items-center">
+                            {
+                                reaccionado
+                                    ? <i className='bx bxs-heart bx-sm text-danger' style={{ cursor: 'pointer' }} onClick={() => fnCambiarReaccionPublicacion(publicacionId)}></i>
+                                    : <i className='bx bx-heart bx-sm text-primary' style={{ cursor: 'pointer' }} onClick={() => fnCambiarReaccionPublicacion(publicacionId)}></i>
+                            }
+                            <span className="h6 mb-0 ms-1">{reacciones}</span>
+                            <i className='bx bx-chat bx-sm text-primary ms-2'></i>
+                            <i className='bx bxs-share bx-sm text-primary ms-1'></i>
+                            <i className='bx bx-share bx-sm text-primary ms-1'></i>
+                        </div>
+
+
+
 
                     </div>
 
