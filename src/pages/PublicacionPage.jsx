@@ -24,7 +24,7 @@ const PublicacionPage = () => {
     if (cargando) return <Loading />
 
     return (
-        <div className="container ontainer animate__animated animate__fadeIn">
+        <div className="container animate__animated animate__fadeIn">
             <h2>Crear Publicación</h2>
             <form onSubmit={formOnSubmit}>
                 <div className="mb-3">

@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import BotonLogoutGoogle from '../components/BotonLogoutGoogle';
-import svg from '../assets/vite.svg';
+import svg from '../assets/emot_logo.png';
 
 const NavBarPrivate = () => {
 
@@ -11,7 +11,7 @@ const NavBarPrivate = () => {
         <nav className="navbar navbar-expand-lg bg-light" data-bs-theme="light">
             <div className="container-fluid">
                 <NavLink to='/admin' className="navbar-brand">
-                    <img src={svg} alt="logo-emot" border="0" />
+                    <img src={svg} alt="logo-emot" border="0" width={40} />
                 </NavLink>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
