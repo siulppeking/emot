@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { v1PrivateApi } from "../api/v1Private.api";
-import { agregarPublicacion, cambiarReaccion, iniciarCarga, obtenerPublicacions, terminarCarga } from "../store/publicacion/publicacion.slice";
+import { agregarComentario, agregarPublicacion, agregarSubComentario, cambiarReaccion, iniciarCarga, obtenerPublicacions, terminarCarga } from "../store/publicacion/publicacion.slice";
 
 export const usePublicacionStore = () => {
+
     const dispatch = useDispatch();
 
     const { publicaciones, cargando } = useSelector(state => state.publicacion);
@@ -46,11 +47,22 @@ export const usePublicacionStore = () => {
         }
     }
 
+    const fnAgregarComentario = async (comentario) => {
+        dispatch(agregarComentario(comentario))
+    }
+
+    const fnAgregarSubComentario = async (subComentario) => {
+        dispatch(agregarSubComentario(subComentario))
+
+    }
+
     return {
         cargando,
         fnObtenerPublicaciones,
         fnCrearPublicacion,
         fnCambiarReaccionPublicacion,
+        fnAgregarComentario,
+        fnAgregarSubComentario,
         publicaciones
     }
 }

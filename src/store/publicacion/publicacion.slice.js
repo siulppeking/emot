@@ -25,6 +25,33 @@ export const publicacionSlice = createSlice({
                 state.publicaciones[index] = publicacion;
             }
         },
+        agregarComentario: (state, { payload }) => {
+            state.publicaciones = state.publicaciones.map(publicacion =>
+                publicacion.publicacionId === payload.publicacionId
+                    ? {
+                        ...publicacion,
+                        comentarios: [payload, ...publicacion.comentarios],
+                    }
+                    : publicacion
+            )
+        },
+        agregarSubComentario: (state, { payload }) => {
+            state.publicaciones = state.publicaciones.map(publicacion =>
+                publicacion.publicacionId === payload.publicacionId
+                    ? {
+                        ...publicacion,
+                        comentarios: publicacion.comentarios.map(comentario =>
+                            comentario.comentarioId === payload.subComentarioId
+                                ? {
+                                    ...comentario,
+                                    subComentarios: [payload, ...comentario.subComentarios],
+                                }
+                                : comentario
+                        ),
+                    }
+                    : publicacion
+            )
+        },
         iniciarCarga: (state) => {
             state.cargando = true
         },
@@ -38,6 +65,8 @@ export const {
     obtenerPublicacions,
     agregarPublicacion,
     cambiarReaccion,
+    agregarComentario,
+    agregarSubComentario,
     iniciarCarga,
     terminarCarga
 } = publicacionSlice.actions;
