@@ -10,6 +10,7 @@ import { Loading } from '../components/Loading'
 import { useCheckUser } from '../hooks/useCheckUser'
 import AboutPage from '../pages/AboutPage'
 import PublicacionPage from '../pages/PublicacionPage'
+import PublicacionesPage from '../pages/PublicacionesPage'
 
 const AppRouter = () => {
 
@@ -29,6 +30,7 @@ const AppRouter = () => {
             <Route element={<PrivateRouter />}>
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="/publicacion" element={<PublicacionPage />} />
+                <Route path="/publicaciones" element={<PublicacionesPage />} />
             </Route>
 
             <Route path="*" element={<PageNotFound />} />

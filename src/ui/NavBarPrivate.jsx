@@ -21,6 +21,9 @@ const NavBarPrivate = () => {
                         <li className="nav-item">
                             <NavLink className="nav-link" to='/publicacion'>Publicaciones</NavLink>
                         </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to='/publicaciones'>Publicaciones Datatable</NavLink>
+                        </li>
                     </ul>
                     <form className="d-flex" style={{ alignItems: 'center' }}>
                         <span className='text-primary' style={{ margin: '7px 5px 0 0' }}><strong>@{nombreUsuario}</strong></span>
