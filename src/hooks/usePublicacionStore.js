@@ -20,12 +20,13 @@ export const usePublicacionStore = () => {
         }
     }
 
-    const fnCrearPublicacion = async (titulo, descripcion) => {
+    const fnCrearPublicacion = async (titulo, descripcion, categoria) => {
         try {
             dispatch(iniciarCarga());
             const response = await v1PrivateApi.post('/publicaciones', {
                 titulo,
-                descripcion
+                descripcion,
+                categoria
             });
             dispatch(agregarPublicacion(response.data.datos))
         } catch (error) {

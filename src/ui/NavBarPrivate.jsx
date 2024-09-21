@@ -26,7 +26,7 @@ const NavBarPrivate = () => {
                         </li>
                     </ul>
                     <form className="d-flex" style={{ alignItems: 'center' }}>
-                        <span className='text-primary' style={{ margin: '7px 5px 0 0' }}><strong>@{nombreUsuario}</strong></span>
+                        <span className='text-primary' style={{ margin: '0 5px 0 0' }}><strong>@{nombreUsuario}</strong></span>
                         <img src={fotoURL} className="img-fluid rounded-circle ms-1 me-2" alt="Foto del Usuario" style={{ objectFit: 'cover', width: '35px', height: '35px' }} />
                         <BotonLogoutGoogle />
                     </form>

@@ -2,8 +2,40 @@ import { useEffect, useState } from "react";
 import { usePublicacionStore } from "../hooks/usePublicacionStore";
 import { v1PrivateApi } from "../api/v1Private.api";
 
+import e14 from '../assets/emojis/emoji_14.gif';
+import e18 from '../assets/emojis/emoji_18.gif';
+
+import e14png from '../assets/emojis/png/emoji_14_00000.png';
+import e18png from '../assets/emojis/png/emoji_18_00000.png';
+import emot_logo from '../assets/emot_logo.png'
+
+const emojis = [
+    { src: e14png, alt: 'emoji_14', nombre: 'Te entiendo', id: 1 },
+    { src: e18png, alt: 'emoji_18', nombre: 'Te comprendo', id: 2 }
+    // Puedes agregar más emojis aquí
+];
+
+const getBadgeColor = (emoción) => {
+    switch (emoción) {
+        case 'Enojo':
+            return 'bg-danger'; // Rojo
+        case 'Tristeza':
+            return 'bg-secondary'; // Gris
+        case 'Ansiedad':
+            return 'bg-warning'; // Amarillo
+        case 'Miedo':
+            return 'bg-dark'; // Negro
+        case 'Alegria':
+            return 'bg-success'; // Verde
+        case 'Amor':
+            return 'bg-primary'; // Azul
+        default:
+            return 'bg-light'; // Default
+    }
+};
+
 const PublicacionCard = ({ publicacion }) => {
-    const { publicacionId, titulo, descripcion, fecCreFormato3, reacciones, reaccionado } = publicacion;
+    const { publicacionId, titulo, descripcion, categoria, fecCreFormato3, reacciones, reaccionado } = publicacion;
     const { fotoURL, nombreUsuario } = publicacion.usuario;
 
     const { fnCambiarReaccionPublicacion, fnAgregarComentario } = usePublicacionStore();
@@ -35,6 +67,14 @@ const PublicacionCard = ({ publicacion }) => {
         }
     };
 
+    const handleReaccionar = async (emojiId) => {
+        try {
+            await fnCambiarReaccionPublicacion(publicacionId, emojiId);
+        } catch (error) {
+            console.error('Error al cambiar la reacción:', error);
+        }
+    }
+
     return (
         <div className="card mb-3">
             <div className="row g-0">
@@ -46,24 +86,42 @@ const PublicacionCard = ({ publicacion }) => {
                     </div>
                 </div>
                 <div className="col-md-12">
+
                     <div className="card-body">
+                        <span className={`badge ${getBadgeColor(categoria)} mb-3`}>
+                            {categoria}
+                        </span>
                         {
                             titulo != null && <h5 className="card-title text-primary"><em>{titulo}</em></h5>
                         }
                         <p className="card-text">{descripcion}</p>
-
-                        <div className="d-flex align-items-center">
-                            {
-                                reaccionado
-                                    ? <i className='bx bxs-heart bx-sm text-danger' style={{ cursor: 'pointer' }} onClick={() => fnCambiarReaccionPublicacion(publicacionId)}></i>
-                                    : <i className='bx bx-heart bx-sm text-primary' style={{ cursor: 'pointer' }} onClick={() => fnCambiarReaccionPublicacion(publicacionId)}></i>
-                            }
-                            <span className="h6 mb-0 ms-1">{reacciones}</span>
-                            <i className={`bx bx${publicacion.comentarios.length == 0 ? '' : 's'}-chat bx-sm text-primary ms-2`} onClick={toggleComentarios} style={{ cursor: 'pointer' }}></i>
-                            <span className="h6 mb-0 ms-1">{publicacion.comentarios.length}</span>
-                            <i className='bx bxs-share bx-sm text-primary ms-1'></i>
-                            <i className='bx bx-share bx-sm text-primary ms-1'></i>
+                    </div>
+                    <div className="card-footer d-flex align-items-center">
+                        <div className="dropdown me-2">
+                            <img src={emot_logo} alt="" width={20} data-bs-toggle="dropdown" style={{ cursor: 'pointer', marginBottom: '2px' }} />
+                            <ul className="dropdown-menu">
+                                {emojis.map(emoji => (
+                                    <li key={emoji.id}>
+                                        <a className="dropdown-item" onClick={() => handleReaccionar(emoji.id)}>
+                                            <img src={emoji.src} alt={emoji.alt} width={32} />{emoji.nombre}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
+                        <span className="h6 mb-0 me-1">{reacciones}</span>
+                        <img src={e14png} alt="" width={32} /><span className="h6 mb-0 me-1">{reacciones}</span>
+                        <img src={e18png} alt="" width={32} /><span className="h6 mb-0 me-1">{reacciones}</span>
+                        {
+                            reaccionado
+                                ? <i className='bx bxs-heart bx-sm text-danger' style={{ cursor: 'pointer' }} onClick={() => fnCambiarReaccionPublicacion(publicacionId)}></i>
+                                : <i className='bx bx-heart bx-sm text-primary' style={{ cursor: 'pointer' }} onClick={() => fnCambiarReaccionPublicacion(publicacionId)}></i>
+                        }
+                        <span className="h6 mb-0 ms-1">{reacciones}</span>
+                        <i className={`bx bx${publicacion.comentarios.length == 0 ? '' : 's'}-chat bx-sm text-primary ms-2`} onClick={toggleComentarios} style={{ cursor: 'pointer' }}></i>
+                        <span className="h6 mb-0 ms-1">{publicacion.comentarios.length}</span>
+                        <i className='bx bxs-share bx-sm text-primary ms-1'></i>
+                        <i className='bx bx-share bx-sm text-primary ms-1'></i>
                     </div>
                 </div>
             </div>
