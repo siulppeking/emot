@@ -21,8 +21,8 @@ export const useCheckUser = () => {
             }
             try {
                 const response = await v1PrivateApi.get('/auth/verificar');
-                const { nombreUsuario, correo, fotoURL } = response.data.datos;
-                dispatch(login({ nombreUsuario, correo, fotoURL }));
+                const { userId, nombreUsuario, correo, fotoURL } = response.data.datos;
+                dispatch(login({ userId, nombreUsuario, correo, fotoURL }));
             } catch (error) {
                 console.log(error.message);
                 dispatch(logout());

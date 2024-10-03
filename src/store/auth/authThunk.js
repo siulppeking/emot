@@ -1,9 +1,11 @@
 import axios from "axios"
 import { agregarError, agregarErrores, login, logout } from "./authSlice"
+import { finCargando, inicioCargando } from "../ui/ui.slice";
 
 export const authCheckingCredentialsGoogle = (googleToken) => {
     return async (dispatch) => {
         try {
+            dispatch(inicioCargando());
             const response = await axios({
                 url: `${import.meta.env.VITE_BASEAPI_EMOT}/api/v1/auth/login/google`,
                 method: 'POST',
@@ -12,10 +14,10 @@ export const authCheckingCredentialsGoogle = (googleToken) => {
                 },
                 data: { googleToken }
             })
-            const { nombreUsuario, correo, token, fotoURL } = response.data.datos;
+            const { userId, nombreUsuario, correo, token, fotoURL } = response.data.datos;
             localStorage.setItem('token', token);
             localStorage.setItem('correo', correo);
-            dispatch(login({ nombreUsuario, correo, fotoURL }))
+            dispatch(login({ userId, userId, nombreUsuario, correo, fotoURL }))
         } catch (error) {
             let cadena = ''
             if (error.response.data.status === 'VALIDATION_ERRORS') {
@@ -26,6 +28,8 @@ export const authCheckingCredentialsGoogle = (googleToken) => {
                 cadena = error.response.data.data.message;
             }
             dispatch(logout({ errorMessage: cadena }))
+        } finally {
+            dispatch(finCargando());
         }
     }
 }
@@ -43,7 +47,7 @@ export const authCheckingCredentialsRegister = (correoIn, claveIn) => {
 
             const { nombreUsuario, correo, token } = response.data.datos;
             localStorage.setItem('token', token);
-            dispatch(login({ nombreUsuario, correo }))
+            dispatch(login({ userId, nombreUsuario, correo }))
         } catch (error) {
             console.log(error.message);
             if (error.response.data.respuesta === 'ERROR') {

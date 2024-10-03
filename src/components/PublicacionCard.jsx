@@ -8,6 +8,7 @@ import e18 from '../assets/emojis/emoji_18.gif';
 import e14png from '../assets/emojis/png/emoji_14_00000.png';
 import e18png from '../assets/emojis/png/emoji_18_00000.png';
 import emot_logo from '../assets/emot_logo.png'
+import { useSelector } from "react-redux";
 
 const emojis = [
     { src: e14png, alt: 'emoji_14', nombre: 'Te entiendo', id: 1 },
@@ -15,8 +16,8 @@ const emojis = [
     // Puedes agregar más emojis aquí
 ];
 
-const getBadgeColor = (emoción) => {
-    switch (emoción) {
+const getBadgeColor = (emocion) => {
+    switch (emocion) {
         case 'Enojo':
             return 'bg-danger'; // Rojo
         case 'Tristeza':
@@ -35,6 +36,7 @@ const getBadgeColor = (emoción) => {
 };
 
 const PublicacionCard = ({ publicacion }) => {
+
     const { publicacionId, titulo, descripcion, categoria, fecCreFormato3, reacciones, reaccionado } = publicacion;
     const { fotoURL, nombreUsuario } = publicacion.usuario;
 
@@ -148,7 +150,9 @@ const PublicacionCard = ({ publicacion }) => {
 
 const Comentario = ({ comentario }) => {
 
-    const { fnAgregarSubComentario } = usePublicacionStore();
+    const { userId } = useSelector(state => state.auth);
+
+    const { fnAgregarSubComentario, fnEliminarComentario } = usePublicacionStore();
 
     const [mostrarSubComentarios, setMostrarSubComentarios] = useState(false);
     const [nuevoSubComentario, setNuevoSubComentario] = useState('');
@@ -174,26 +178,41 @@ const Comentario = ({ comentario }) => {
         }
     };
 
+    const handleEliminarComentario = (comentarioId) => {
+        fnEliminarComentario(comentarioId);
+    }
+
     return (
         <div className="comentario mb-3">
-            <div className="col-md-12 d-flex align-items-center mt-3">
-                <img src={comentario.usuario.fotoURL} className="img-fluid rounded-circle ms-3 me-2"
-                    alt="Foto del Usuario"
-                    width={25}
-                    height={25}
-                    style={{ objectFit: 'cover' }} />
-                <div>
-                    <h6 className="mb-0">@{comentario.usuario.nombreUsuario}</h6>
-                    <small className="text-muted">{comentario.fechaCreacion}</small>
-                    <p className="card-text mb-0">{comentario.texto}</p>
-                    <div className="d-flex align-items-center mt-1">
-                        <i className='bx bx-heart text-primary' style={{ cursor: 'pointer' }}></i>
-                        <span className="h6 mb-0 ms-1">{comentario.reacciones}</span>
-                        <i className={`bx bx${comentario.subComentarios.length == 0 ? '' : 's'}-chat text-primary ms-2`} onClick={toggleSubComentarios} style={{ cursor: 'pointer' }}></i>
-                        <span className="h6 mb-0 ms-1">{comentario.subComentarios.length}</span>
+            <div className="col-md-12 d-flex align-items-center justify-content-between mt-3">
+                <div className="d-flex align-items-center">
+                    <img src={comentario.usuario.fotoURL} className="img-fluid rounded-circle ms-3 me-2"
+                        alt="Foto del Usuario"
+                        width={25}
+                        height={25}
+                        style={{ objectFit: 'cover' }} />
+                    <div>
+                        <h6 className="mb-0">@{comentario.usuario.nombreUsuario}</h6>
+                        <small className="text-muted">{comentario.fechaCreacion}</small>
+                        <p className="card-text mb-0">{comentario.texto}</p>
+                        <div className="d-flex align-items-center mt-1">
+                            <i className='bx bx-heart text-primary' style={{ cursor: 'pointer' }}></i>
+                            <span className="h6 mb-0 ms-1">{comentario.reacciones}</span>
+                            <i className={`bx bx${comentario.subComentarios.length === 0 ? '' : 's'}-chat text-primary ms-2`} onClick={toggleSubComentarios} style={{ cursor: 'pointer' }}></i>
+                            <span className="h6 mb-0 ms-1">{comentario.subComentarios.length}</span>
+                        </div>
                     </div>
                 </div>
+                {/* Botón de eliminar al final, alineado con la imagen */}
+                {
+                    userId === comentario.usuario.userId &&
+                    <i className='bx bx-trash text-primary me-3' style={{ cursor: 'pointer' }} onClick={() => handleEliminarComentario(comentario.comentarioId)}></i>
+
+                }
             </div>
+
+
+
             {mostrarSubComentarios && (
                 <div className="subcomentarios-section ms-3 mt-2">
                     <div className="input-group mb-3">

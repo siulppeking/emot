@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { v1PrivateApi } from "../api/v1Private.api";
-import { agregarComentario, agregarPublicacion, agregarSubComentario, cambiarReaccion, iniciarCarga, obtenerPublicacions, terminarCarga } from "../store/publicacion/publicacion.slice";
+import { agregarComentario, agregarPublicacion, agregarSubComentario, cambiarReaccion, eliminarComentario, iniciarCarga, obtenerPublicacions, terminarCarga } from "../store/publicacion/publicacion.slice";
 
 export const usePublicacionStore = () => {
 
@@ -36,6 +36,15 @@ export const usePublicacionStore = () => {
         }
     }
 
+    const fnEliminarComentario = async (comentarioId) => {
+        try {
+            await v1PrivateApi.delete('/comentarios/' + comentarioId);
+            dispatch(eliminarComentario(comentarioId))
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
     const fnCambiarReaccionPublicacion = async (publicacionId) => {
         try {
             //dispatch(iniciarCarga());
@@ -61,6 +70,7 @@ export const usePublicacionStore = () => {
         cargando,
         fnObtenerPublicaciones,
         fnCrearPublicacion,
+        fnEliminarComentario,
         fnCambiarReaccionPublicacion,
         fnAgregarComentario,
         fnAgregarSubComentario,

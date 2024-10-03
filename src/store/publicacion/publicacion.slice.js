@@ -52,6 +52,15 @@ export const publicacionSlice = createSlice({
                     : publicacion
             )
         },
+        eliminarComentario: (state, { payload }) => {
+            console.log(payload);
+            state.publicaciones = state.publicaciones.map(publicacion => ({
+                ...publicacion,
+                comentarios: publicacion.comentarios.filter(comentario =>
+                    comentario.comentarioId !== payload
+                ),
+            }));
+        },
         iniciarCarga: (state) => {
             state.cargando = true
         },
@@ -66,6 +75,7 @@ export const {
     agregarPublicacion,
     cambiarReaccion,
     agregarComentario,
+    eliminarComentario,
     agregarSubComentario,
     iniciarCarga,
     terminarCarga
