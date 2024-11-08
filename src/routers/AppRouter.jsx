@@ -11,6 +11,7 @@ import { useCheckUser } from '../hooks/useCheckUser'
 import AboutPage from '../pages/AboutPage'
 import PublicacionPage from '../pages/PublicacionPage'
 import PublicacionesPage from '../pages/PublicacionesPage'
+import ComunidadPage from '../pages/ComunidadPage'
 
 const AppRouter = () => {
 
@@ -31,6 +32,7 @@ const AppRouter = () => {
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="/publicacion" element={<PublicacionPage />} />
                 <Route path="/publicaciones" element={<PublicacionesPage />} />
+                <Route path="/comunidades" element={<ComunidadPage />} />
             </Route>
 
             <Route path="*" element={<PageNotFound />} />

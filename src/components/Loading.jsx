@@ -8,7 +8,7 @@ export const Loading = () => {
             <div className="circles">
                 <div className="circle"></div>
                 <div className="mainLogo">
-                    <img src={svg} alt="" style={{opacity: 0.45, width: '70%', marginTop: '24px'}} />
+                    <img src={svg} alt="" style={{opacity: 0.45, width: '70%', marginTop: '17px'}} />
                 </div>
             </div>
         </div>

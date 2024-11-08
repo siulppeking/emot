@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import svg from '../assets/vite.svg';
+import svg from '../assets/emot_logo.png';
 import emoji1 from '../assets/emojis/emoji_1.gif';
 import emoji2 from '../assets/emojis/emoji_2.gif';
 import emoji3 from '../assets/emojis/emoji_3.gif';
@@ -15,7 +15,7 @@ const HomePage = () => {
         {/* <!-- Hero Section --> */}
         <section className="hero">
           <div className="container">
-            <h1 className="display-3 fw-bold"><img src={svg} alt="" style={{ width: '50px', marginTop: '0px' }} /> Bienvenidos a eMOT</h1>
+            <h1 className="display-3 fw-bold"><img src={svg} alt="" style={{ width: '75px', marginTop: '0px' }} /> Bienvenidos a eMOT</h1>
             <p className="lead">Tu compañero en el viaje hacia una mejor salud mental</p>
             <Link to='/login' className="btn btn-primary btn-lg">Empieza ahora</Link>
           </div>

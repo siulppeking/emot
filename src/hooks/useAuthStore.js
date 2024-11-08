@@ -15,8 +15,8 @@ export const useAuthStore = () => {
             dispatch(inicioCargando());
             const data = { correo: correoIn, clave: claveIn }
             const response = await v1PublicApi.post('/auth/login', data);
-
-            const { nombreUsuario, correo, token, fotoURL } = response.data.datos;
+            console.log(response);
+            const { userId, nombreUsuario, correo, token, fotoURL } = response.data.datos;
             localStorage.setItem('token', token);
             dispatch(login({ userId, nombreUsuario, correo, fotoURL }));
         } catch (error) {
